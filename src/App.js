@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import About from "./components/About";
+import Contactus from "./components/Contactus";
+import Homepage from "./components/Homepage";
+import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
+  const [focusedPage, setFocusedPage] = useState("homepage");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div> 
+        <BrowserRouter>
+          <Navbar focusedPage={focusedPage} setFocusedPage={setFocusedPage} />
+          <Routes>
+            <Route exact path="/" element={<Homepage />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact-us" element={<Contactus />} />
+          </Routes>
+        </BrowserRouter>
+      </div> 
+  )
 }
 
 export default App;
