@@ -17,7 +17,7 @@ function Navbar({focusedPage, setFocusedPage}) {
                 <Link 
                     to="/"
                     style={{
-                        color: focusedPage==="homepage"? "#0CAFFF":"aliceblue",
+                        color: focusedPage==="homepage"? "#d9d9d9":"aliceblue",
                         textDecoration: focusedPage==="homepage"? "underline":"none",
                         textDecorationThickness: focusedPage==="homepage"? "2px":"0px",
                         textUnderlineOffset: focusedPage==="homepage"? "16.3px":"0px"
@@ -33,7 +33,7 @@ function Navbar({focusedPage, setFocusedPage}) {
                 <Link 
                     to="/about" 
                     style={{
-                        color: focusedPage==="about"? "#0CAFFF":"aliceblue",
+                        color: focusedPage==="about"? "#d9d9d9":"aliceblue",
                         textDecoration: focusedPage==="about"? "underline":"none",
                         textDecorationThickness: focusedPage==="about"? "2px":"0px",
                         textUnderlineOffset: focusedPage==="about"? "16.3px":"0px"
@@ -49,7 +49,7 @@ function Navbar({focusedPage, setFocusedPage}) {
                 <Link 
                     to="/contact-us"
                     style={{
-                        color: focusedPage==="contactus"? "#0CAFFF":"aliceblue",
+                        color: focusedPage==="contactus"? "#d9d9d9":"aliceblue",
                         textDecoration: focusedPage==="contactus"? "underline":"none",
                         textDecorationThickness: focusedPage==="contactus"? "2px":"0px",
                         textUnderlineOffset: focusedPage==="contactus"? "16.3px":"0px"
