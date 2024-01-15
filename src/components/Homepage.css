@@ -59,7 +59,7 @@
     align-items: center;
     justify-content: space-between;
     width: 98%;
-    height: 100px;
+    height: 70px;
     margin: 0.5%;
     border: 2px solid black;
     border-radius: 1rem;
@@ -69,12 +69,13 @@
 .content-text {
     width: 70%;
     height: 90%;
-    margin: 2%;
+    margin: 1%;
+    font-size: 22px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4; /* start showing ellipsis when 4th line is reached */
-    white-space: pre-wrap;
+    -webkit-line-clamp: 2; /* start showing ellipsis when 2nd line is reached */
+    border-radius: 0.5rem;
 }
 
 .content-buttons {
@@ -87,8 +88,20 @@
     border-radius: 1rem;
 }
 
+.mark-as-done-checkbox {
+    width: 12%;
+    height: 30px;
+    margin-right: -1%;
+    filter: grayscale(100%);
+}
+
+.mark-as-done-checkbox:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+}
+
 .content-buttons button {
-    width: 43%;
+    width: 35%;
     padding: 5px;
     font-size: 16px;
     text-align: center;
