@@ -38,10 +38,36 @@ const updateTaskById = async (id, updatedTask) => {
     }
 }
 
+const deleteTaskById = async (id) => {
+    try {
+        const response = await axios.delete(baseUrl + `/${id}`);
+        return response;
+    }
+    catch {
+        alert("Something went wrong.");
+    }
+}
+
+const addNewTask = async (task) => {
+    try {
+        const data = {
+            "task": task,
+            "isCompleted": false
+        }
+        const response = await axios.post(baseUrl, data);
+        return response;
+    }
+    catch {
+        alert("Something went wrong.");
+    }
+}
+
 const TaskService = {
     getAllTasks,
     updateIsCompletedStatusById,
-    updateTaskById
+    updateTaskById,
+    deleteTaskById,
+    addNewTask
 }
 
 export default TaskService;

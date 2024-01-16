@@ -22,26 +22,26 @@ function Homepage() {
         getAllTasks();
     }, [dataChangeTracker]);
 
-    const handleCheckbox = async (index) => {
-        const checkboxId = `checkbox${index}`;
+    const handleCheckbox = async (id) => {
+        const checkboxId = `checkbox${id}`;
         let checkboxElement = document.getElementById(checkboxId);
         if(!checkboxElement.checked) {
-            await TaskService.updateIsCompletedStatusById(index+1, false);
+            await TaskService.updateIsCompletedStatusById(id, false);
         }
         else {
-            await TaskService.updateIsCompletedStatusById(index+1, true);
+            await TaskService.updateIsCompletedStatusById(id, true);
         }
         setDataChangeTracker((prev) => !prev);
     }
 
-    const editTask = async (index) => {
-        const textboxId = `content-text${index}`;
-        const editButtonId = `edit-button${index}`;
+    const editTask = async (id) => {
+        const textboxId = `content-text${id}`;
+        const editButtonId = `edit-button${id}`;
         let textboxElement = document.getElementById(textboxId);
         let editButton = document.getElementById(editButtonId);
         if(editButton.innerHTML === "Save") {
             const updatedTask = textboxElement.innerHTML;
-            await TaskService.updateTaskById(index+1, updatedTask);
+            await TaskService.updateTaskById(id, updatedTask);
             editButton.innerHTML = "Edit";
             textboxElement.contentEditable = false;
             textboxElement.style.overflow = "hidden";
@@ -57,8 +57,8 @@ function Homepage() {
 
     // to style content-text on the basis of completion status
     useEffect(() => {
-        taskData.forEach((data, index) => {
-            const textboxId = `content-text${index}`;
+        taskData.forEach((data) => {
+            const textboxId = `content-text${data.id}`;
             let textboxElement = document.getElementById(textboxId);
             if(data.isCompleted) {    
                 textboxElement.style.textDecoration = "line-through";
@@ -70,23 +70,55 @@ function Homepage() {
             }
         })
     }, [taskData]);
+
+    const deleteTask = async (id) => {
+        if(window.confirm("Are you sure?")) {
+            await TaskService.deleteTaskById(id);
+            setDataChangeTracker((prev) => !prev);
+        }
+    }
+
+    const addNewTask = () => {
+        document.getElementById("add-new-task-text").innerHTML = '';
+        document.getElementById("add-new-task-parent-container").style.display = "flex";
+        document.getElementById("add-new-task-text").focus();
+    }
+
+    const handleCancel = () => {
+        document.getElementById("add-new-task-parent-container").style.display = "none";
+    }
+
+    const saveNewAddedTask = async () => {
+        const task = document.getElementById("add-new-task-text").innerHTML;
+        await TaskService.addNewTask(task);
+        document.getElementById("add-new-task-parent-container").style.display = "none";
+        setDataChangeTracker((prev) => !prev);
+    }
     
     return (
         <div className="homepage-div">
             <div className="homepage-header"> TO-DO LIST </div>
             <div className="add-task-div">
-                <button className="add-task-button"> Add Task </button>
+                <button className="add-task-button" onClick={() => addNewTask()}> Add Task </button>
             </div>
             <div className="parent-content-box">
+                {/* below div will appear for Add Task */}
+                <div className="content-area" id="add-new-task-parent-container" style={{display: "none"}}>
+                    <div contentEditable className="content-text" id="add-new-task-text"></div>
+                    <div className="content-buttons">
+                        <button className="save-button" style={{width: "45%"}} onClick={() => saveNewAddedTask()}>Save</button>
+                        <button className="cancel-button" style={{width: "45%"}} onClick={() => handleCancel()}>Cancel</button>
+                    </div>
+                </div>
                 {
                     taskData.map((data, index) => {
                         return (
                             <div className="content-area" key={index}>
-                                <div className="content-text" id={`content-text${index}`}> {data.task} </div>
+                                <div className="content-text" id={`content-text${data.id}`}> {data.task} </div>
                                 <div className="content-buttons">
-                                    <input className="mark-as-done-checkbox" id={`checkbox${index}`} type="checkbox" checked={data.isCompleted} onChange={() => handleCheckbox(index)}></input>
-                                    <button className="edit-button" id={`edit-button${index}`} onClick={() => editTask(index)}> Edit </button>
-                                    <button className="delete-button"> Delete </button> 
+                                    <input className="mark-as-done-checkbox" id={`checkbox${data.id}`} type="checkbox" checked={data.isCompleted} onChange={() => handleCheckbox(data.id)}></input>
+                                    <button className="edit-button" id={`edit-button${data.id}`} onClick={() => editTask(data.id)}> Edit </button>
+                                    <button className="delete-button" onClick={() => deleteTask(data.id)}> Delete </button> 
                                 </div>
                             </div>
                         );
