@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:3030/tasks";
+// const baseUrl = "http://localhost:3030/tasks";
+
+const baseUrl = "https://to-do-webservice.onrender.com/tasks";
 
 const getAllTasks = async () => {
     try {
