@@ -40,18 +40,16 @@ function Homepage() {
         let textboxElement = document.getElementById(textboxId);
         let editButton = document.getElementById(editButtonId);
         if(editButton.innerHTML === "Save") {
-            const updatedTask = textboxElement.innerHTML;
+            const updatedTask = textboxElement.value;
             await TaskService.updateTaskById(id, updatedTask);
             editButton.innerHTML = "Edit";
-            textboxElement.contentEditable = false;
-            textboxElement.style.overflow = "hidden";
+            textboxElement.disabled = true;
             setDataChangeTracker((prev) => !prev);
         }
         else {
             editButton.innerHTML = "Save";
-            textboxElement.contentEditable = true;
+            textboxElement.disabled = false;
             textboxElement.focus();
-            textboxElement.style.overflow = "auto";
         }
     }
 
@@ -79,8 +77,9 @@ function Homepage() {
     }
 
     const addNewTask = () => {
-        document.getElementById("add-new-task-text").innerHTML = '';
+        document.getElementById("add-new-task-text").value = '';
         document.getElementById("add-new-task-parent-container").style.display = "flex";
+        document.getElementById("add-new-task-text").disabled = false;
         document.getElementById("add-new-task-text").focus();
     }
 
@@ -89,7 +88,7 @@ function Homepage() {
     }
 
     const saveNewAddedTask = async () => {
-        const task = document.getElementById("add-new-task-text").innerHTML;
+        const task = document.getElementById("add-new-task-text").value;
         await TaskService.addNewTask(task);
         document.getElementById("add-new-task-parent-container").style.display = "none";
         setDataChangeTracker((prev) => !prev);
@@ -104,7 +103,7 @@ function Homepage() {
             <div className="parent-content-box">
                 {/* below div will appear for Add Task */}
                 <div className="content-area" id="add-new-task-parent-container" style={{display: "none"}}>
-                    <div contentEditable className="content-text" id="add-new-task-text"></div>
+                    <textarea className="content-text" id="add-new-task-text" disabled/>
                     <div className="content-buttons">
                         <button className="save-button" style={{width: "45%"}} onClick={() => saveNewAddedTask()}>Save</button>
                         <button className="cancel-button" style={{width: "45%"}} onClick={() => handleCancel()}>Cancel</button>
@@ -114,7 +113,7 @@ function Homepage() {
                     taskData.map((data, index) => {
                         return (
                             <div className="content-area" key={index}>
-                                <div className="content-text" id={`content-text${data.id}`}> {data.task} </div>
+                                <textarea className="content-text" id={`content-text${data.id}`} disabled defaultValue={data.task} />
                                 <div className="content-buttons">
                                     <input className="mark-as-done-checkbox" id={`checkbox${data.id}`} type="checkbox" checked={data.isCompleted} onChange={() => handleCheckbox(data.id)}></input>
                                     <button className="edit-button" id={`edit-button${data.id}`} onClick={() => editTask(data.id)}> Edit </button>

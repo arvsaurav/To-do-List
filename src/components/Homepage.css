@@ -67,16 +67,26 @@
 }
 
 .content-text {
+    resize: none;
     width: 70%;
-    height: 90%;
+    height: 80%;
     margin: 1%;
-    font-size: 22px;
+    font-size: 23px;
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2; /* start showing ellipsis when 2nd line is reached */
-    border-radius: 0.5rem;
+    border: none;
+    outline: none;
+    background-color: #e7e7e7;
 }
+
+.content-text:enabled {
+    overflow: auto;
+    -webkit-line-clamp: unset;
+    border-radius: 0.5rem;
+    outline: 1px solid black;
+} 
 
 .content-buttons {
     display: flex;
